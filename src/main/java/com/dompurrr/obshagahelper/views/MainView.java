@@ -1,13 +1,41 @@
 package com.dompurrr.obshagahelper.views;
 
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 
-@Route
-public class MainView extends VerticalLayout {
+@Route("")
+@PageTitle("Встаем в планочку и угадываем, что мы сделали не так")
+public class MainView extends AppLayout {
     public MainView(){
-        add(new Button("Кликни", e -> Notification.show("Не кликай, бли*н!!!")));
+//        Link link = new Link("Click Me!", new ExternalResource("http://vaadin.com/"));
+        H1 title = new H1("Общага");
+        title.getStyle()
+                .set("font-size", "var(--lumo-font-size-l)")
+                .set("left", "var(--lumo-space-l)")
+                .set("margin", "0")
+                .set("position", "absolute");
+
+        Tabs tabs = getTabs();
+        tabs.getStyle().set("margin", "auto");
+        addToNavbar(title, tabs);
+    }
+
+    private Tabs getTabs() {
+        RouterLink memberLink = new RouterLink("Жители", MemberView.class);
+        Tab members = new Tab(memberLink);
+
+        RouterLink moneyLink = new RouterLink("Деньги", MoneyView.class);
+        Tab moneys = new Tab(moneyLink);
+
+        Tab duties = new Tab("Дежурства");
+        duties.setEnabled(false);
+        Tabs tabs = new Tabs(members, moneys, duties);
+        tabs.setSelectedTab(members);
+        return tabs;
     }
 }

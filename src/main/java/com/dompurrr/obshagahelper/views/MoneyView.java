@@ -5,15 +5,13 @@ import com.dompurrr.obshagahelper.service.TransactionServiceImpl;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import javax.sql.rowset.spi.TransactionalWriter;
-
-@Route("money")
+@Route(value = "money", layout = MainView.class)
+@PageTitle("Считаем деньги")
 public class MoneyView extends VerticalLayout {
     final Grid<Transaction> grid;
     private final TransactionServiceImpl repo;
