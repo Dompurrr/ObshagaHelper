@@ -12,8 +12,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.PermitAll;
+
+@PermitAll
 @Route(value = "member", layout = MainView.class)
-@PageTitle("Встаем в планочку и думаем, что мы сделали не так")
+@PageTitle("Проживающие")
 public class MemberView extends VerticalLayout {
     final Grid<Member> grid;
     private final MemberServiceImpl repo;
@@ -21,14 +24,15 @@ public class MemberView extends VerticalLayout {
     public MemberView(MemberServiceImpl repo){
         this.repo = repo;
         //Input fields
-        TextField room = new TextField("Room");
-        TextField name = new TextField("Name");
-        Button addbutton = new Button("Add");
+        TextField room = new TextField("Комната");
+        TextField name = new TextField("Имя");
+        Button addbutton = new Button("Добавить");
         addbutton.addClickListener(clickEvent -> {
             Member newMember = new Member();
             newMember.setRoom(room.getValue());
             newMember.setName(name.getValue());
             repo.create(newMember);
+            listMembers();
         });
 
         FormLayout formLayout = new FormLayout();
@@ -37,8 +41,12 @@ public class MemberView extends VerticalLayout {
                 addbutton
         );
         formLayout.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0", 1)
+                new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("500px", 2)
         );
+
+        formLayout.setColspan(addbutton, 2);
+
         add(formLayout);
 
         //Output field

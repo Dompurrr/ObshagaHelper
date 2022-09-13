@@ -10,6 +10,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.PermitAll;
+
+@PermitAll
 @Route(value = "money", layout = MainView.class)
 @PageTitle("Считаем деньги")
 public class MoneyView extends VerticalLayout {
@@ -19,11 +22,11 @@ public class MoneyView extends VerticalLayout {
     public MoneyView(TransactionServiceImpl repo) {
         this.repo = repo;
         //Input fields
-        TextField room = new TextField("Room");
-        TextField name = new TextField("Name");
-        TextField amount = new TextField("Amount");
-        TextField comment = new TextField("Comment");
-        Button addbutton = new Button("Add");
+        TextField room = new TextField("Комната");
+        TextField name = new TextField("Имя");
+        TextField amount = new TextField("Сумма покупки");
+        TextField comment = new TextField("Назначение траты");
+        Button addbutton = new Button("Добавить");
         addbutton.addClickListener(clickEvent -> {
             Transaction newTransaction = new Transaction();
             newTransaction.setAmount(amount.getValue());
@@ -39,10 +42,13 @@ public class MoneyView extends VerticalLayout {
                 amount,
                 comment, addbutton
         );
+
         formLayout.setResponsiveSteps(
-                // Use one column by default
-                new FormLayout.ResponsiveStep("0", 1)
+                new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("500px", 2)
         );
+        formLayout.setColspan(addbutton, 2);
+
         add(formLayout);
 
         //Output field
